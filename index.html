@@ -124,13 +124,17 @@ code{font-family:'Azeret Mono',monospace;font-size:.87em;background:var(--s2);pa
 
 /* figures */
 figure{margin-top:auto;margin-bottom:auto}
-.shot{width:100%;border-radius:12px;overflow:hidden;border:1px solid var(--hair);background:var(--s1);display:block;padding:0;cursor:zoom-in}
+.shot{
+  width:100%;border-radius:12px;overflow:hidden;border:1px solid var(--hair);
+  background:var(--s1);display:block;padding:0;cursor:zoom-in;position:relative;
+}
 .shot img{width:100%;height:auto;display:block}
 .shot.tall img{max-height:52dvh;object-fit:cover;object-position:top left}
 .shot .miss{
   display:none;padding:34px 18px;text-align:center;
   font-family:'Azeret Mono',monospace;font-size:.68rem;line-height:1.7;color:var(--txt-3);
 }
+.shot.broken{aspect-ratio:auto !important}
 .shot.broken img{display:none}
 .shot.broken .miss{display:block}
 figcaption{font-family:'Azeret Mono',monospace;font-size:.63rem;color:var(--txt-3);margin-top:10px;line-height:1.6;letter-spacing:.02em}
@@ -299,9 +303,9 @@ figcaption b{color:var(--txt-2);font-weight:500}
   <span class="eye">03 · Рабочий стол</span>
   <h2>Карточка субъекта</h2>
   <figure>
-    <button class="shot" data-lb>
-      <img src="img/desktop.png" alt="Терминал с карточкой субъекта" loading="lazy">
-      <span class="miss">img/desktop.png<br>не загружен</span>
+    <button class="shot" data-lb style="aspect-ratio:1400/788">
+      <img src="img/desktop.webp" width="1400" height="788" alt="Терминал с карточкой субъекта" loading="lazy" decoding="async">
+      <span class="miss">img/desktop.webp<br>не загружен</span>
     </button>
     <button class="zoomhint" data-lb>⤢ открыть целиком</button>
     <figcaption><b>Слева:</b> выгрузка полей. Красным подсвечены три незакрытых: отец, мать, ПИНФЛ. <b>Центр:</b> профиль @o.z.m.sev. <b>Справа:</b> фото в разрешении 512, лицо не читается.</figcaption>
@@ -313,8 +317,8 @@ figcaption b{color:var(--txt-2);font-weight:500}
   <h2>Профиль, который<br>закрыл личность</h2>
   <figure>
     <button class="shot tall" data-lb>
-      <img src="img/ok.png" alt="Профиль в Одноклассниках, сетка из 42 друзей" loading="lazy">
-      <span class="miss">img/ok.png<br>не загружен</span>
+      <img src="img/ok.webp" width="1400" height="1160" alt="Профиль в Одноклассниках, сетка из 42 друзей" loading="lazy" decoding="async">
+      <span class="miss">img/ok.webp<br>не загружен</span>
     </button>
     <button class="zoomhint" data-lb>⤢ открыть целиком</button>
     <figcaption>31 августа, 26 лет, Беруний, точное написание фамилии. Четыре параметра совпали одновременно. Аккаунт брошен в декабре 2017, зато список друзей открыт. <b>Обведены:</b> Отабек Ражапов и Мерена Жумалиева.</figcaption>
@@ -427,9 +431,9 @@ figcaption b{color:var(--txt-2);font-weight:500}
   <span class="eye">07 · География</span>
   <h2>Один коридор<br>на всё дело</h2>
   <figure>
-    <button class="shot" data-lb>
-      <img src="img/map.png" alt="Карта маршрута Беруний, Ургенч, Бейнеу, Актау" loading="lazy">
-      <span class="miss">img/map.png<br>не загружен</span>
+    <button class="shot" data-lb style="aspect-ratio:1400/933">
+      <img src="img/map.webp" width="1400" height="933" alt="Карта маршрута Беруний, Ургенч, Бейнеу, Актау" loading="lazy" decoding="async">
+      <span class="miss">img/map.webp<br>не загружен</span>
     </button>
     <button class="zoomhint" data-lb>⤢ открыть целиком</button>
     <figcaption>Беруний стоит на правом берегу Амударьи, в 20 км от станции Ургенч, и граничит с Хорезмской областью. Поэтому хорезмский код 90 на машине парня с каракалпакской прописки противоречия не создаёт.</figcaption>
@@ -679,14 +683,12 @@ slides.forEach(function(s){ io.observe(s); });
 
 /* missing image placeholders */
 Array.prototype.forEach.call(document.querySelectorAll('.shot img'), function(im){
-  im.addEventListener('error', function(){
-    var host = im.closest('.shot');
-    if(host) host.classList.add('broken');
-  });
-  if(im.complete && im.naturalWidth === 0){
+  function fail(){
     var host = im.closest('.shot');
     if(host) host.classList.add('broken');
   }
+  im.addEventListener('error', fail);
+  if(im.complete && im.naturalWidth === 0) fail();
 });
 
 /* graph readout */
