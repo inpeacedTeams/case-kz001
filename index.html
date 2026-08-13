@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0e1014">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>KZ-001</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=Azeret+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --void:    oklch(11.5% 0.008 258);
+  --s1:      oklch(15.5% 0.010 258);
+  --s2:      oklch(20% 0.012 258);
+  --s3:      oklch(26% 0.012 258);
+  --hair:    oklch(32% 0.012 258);
+  --txt:     oklch(96% 0.004 258);
+  --txt-2:   oklch(70% 0.012 258);
+  --txt-3:   oklch(50% 0.014 258);
+  --amber:   oklch(78% 0.145 72);
+  --amber-d: oklch(50% 0.105 68);
+  --rust:    oklch(63% 0.185 26);
+  --moss:    oklch(72% 0.145 152);
+  --sky:     oklch(72% 0.120 235);
+  --plum:    oklch(68% 0.130 320);
+
+  --gut: clamp(18px, 5.2vw, 46px);
+  --e: cubic-bezier(.22,1,.36,1);
+}
+
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Bricolage Grotesque',system-ui,sans-serif;
+  background:var(--void);color:var(--txt);
+  font-size:16px;line-height:1.52;
+  -webkit-font-smoothing:antialiased;
+  font-optical-sizing:auto;
+  overscroll-behavior-y:none;
+}
+.m{font-family:'Azeret Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums;letter-spacing:-0.01em}
+
+/* deck */
+.deck{height:100dvh;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none}
+.deck::-webkit-scrollbar{display:none}
+.s{
+  min-height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;
+  padding:calc(env(safe-area-inset-top) + 62px) var(--gut) calc(env(safe-area-inset-bottom) + 34px);
+  display:flex;flex-direction:column;justify-content:center;position:relative;
+  border-top:1px solid var(--hair);
+}
+.s:first-child{border-top:0}
+
+/* chrome */
+.top{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  padding:calc(env(safe-area-inset-top) + 11px) var(--gut) 11px;
+  background:oklch(11.5% .008 258/.82);
+  backdrop-filter:blur(18px) saturate(170%);
+  -webkit-backdrop-filter:blur(18px) saturate(170%);
+  display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--hair);
+}
+.top-id{font-family:'Azeret Mono',monospace;font-size:.62rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);flex:none}
+.top-ttl{font-size:.78rem;color:var(--txt-3);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top-n{font-family:'Azeret Mono',monospace;font-size:.66rem;color:var(--txt-3);flex:none}
+.top-n b{color:var(--txt)}
+.bar{position:fixed;top:0;left:0;height:2px;background:var(--amber);z-index:61;width:0;transition:width .12s linear}
+
+/* type */
+.eye{font-family:'Azeret Mono',monospace;font-size:.64rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--amber);margin-bottom:14px;display:block}
+.eye.rust{color:var(--rust)}
+.eye.moss{color:var(--moss)}
+h1{font-size:clamp(2.3rem,10.5vw,5.4rem);font-weight:800;line-height:.95;letter-spacing:-.035em;text-wrap:balance}
+h1 em{font-style:normal;font-weight:300;color:var(--txt-3);display:block}
+h2{font-size:clamp(1.55rem,6.6vw,3rem);font-weight:700;line-height:1.06;letter-spacing:-.028em;text-wrap:balance;margin-bottom:16px}
+h3{font-size:clamp(1.05rem,4.4vw,1.4rem);font-weight:700;letter-spacing:-.018em;line-height:1.24}
+p{color:var(--txt-2);max-width:60ch;font-size:clamp(.94rem,3.7vw,1.06rem)}
+p+p{margin-top:11px}
+p b,li b{color:var(--txt);font-weight:600}
+code{font-family:'Azeret Mono',monospace;font-size:.87em;background:var(--s2);padding:1.5px 5px;border-radius:4px;color:var(--txt)}
+.lede{font-size:clamp(1rem,4.1vw,1.2rem);color:var(--txt-2);max-width:52ch}
+
+/* cover */
+.cover{justify-content:flex-end;padding-bottom:calc(env(safe-area-inset-bottom) + 26px)}
+.cover::before{
+  content:'';position:absolute;inset:0;z-index:-1;
+  background:radial-gradient(120% 70% at 82% 8%, oklch(78% .145 72/.11), transparent 62%),
+             radial-gradient(90% 60% at 8% 96%, oklch(63% .185 26/.08), transparent 60%);
+}
+.cover h1{margin-bottom:22px}
+.cover-meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:24px}
+.chip{font-family:'Azeret Mono',monospace;font-size:.66rem;font-weight:500;padding:5px 10px;border:1px solid var(--hair);border-radius:20px;color:var(--txt-2)}
+.chip.a{border-color:var(--amber-d);color:var(--amber)}
+.chip.r{border-color:oklch(63% .185 26/.42);color:var(--rust)}
+.scroll-cue{
+  position:absolute;bottom:calc(env(safe-area-inset-bottom) + 14px);left:50%;transform:translateX(-50%);
+  font-family:'Azeret Mono',monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--txt-3);
+  animation:bob 2.6s var(--e) infinite;
+}
+@keyframes bob{0%,100%{opacity:.45;transform:translate(-50%,0)}50%{opacity:1;transform:translate(-50%,5px)}}
+
+/* rail */
+.rail{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--hair);margin-top:8px;border-radius:12px;overflow:hidden}
+.rail-c{background:var(--void);padding:16px 14px}
+.rail-n{font-family:'Azeret Mono',monospace;font-size:clamp(1.5rem,7vw,2.1rem);font-weight:600;letter-spacing:-.04em;line-height:1;display:block}
+.rail-n.a{color:var(--amber)}
+.rail-n.r{color:var(--rust)}
+.rail-n.m{color:var(--moss)}
+.rail-l{font-family:'Azeret Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--txt-3);margin-top:6px;display:block}
+@media (min-width:620px){.rail{grid-template-columns:repeat(4,1fr)}}
+
+/* data list */
+.dl{margin-top:6px;border-top:1px solid var(--hair)}
+.dl-r{display:grid;grid-template-columns:106px minmax(0,1fr);gap:12px;padding:10px 0;border-bottom:1px solid var(--hair);align-items:baseline}
+.dl-k{font-family:'Azeret Mono',monospace;font-size:.6rem;letter-spacing:.09em;text-transform:uppercase;color:var(--txt-3)}
+.dl-v{font-family:'Azeret Mono',monospace;font-size:.84rem;word-break:break-word;line-height:1.55}
+.dl-v.a{color:var(--amber)}
+.dl-v.r{color:var(--rust)}
+.dl-v.m{color:var(--moss)}
+.dl-v.s{color:var(--sky)}
+.dl-v small{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:.78rem;color:var(--txt-3);margin-top:2px;letter-spacing:0}
+@media (min-width:520px){.dl-r{grid-template-columns:132px minmax(0,1fr)}}
+
+/* figures */
+figure{margin-top:auto;margin-bottom:auto}
+.shot{width:100%;border-radius:12px;overflow:hidden;border:1px solid var(--hair);background:var(--s1);display:block;padding:0;cursor:zoom-in}
+.shot img{width:100%;height:auto;display:block}
+.shot.tall img{max-height:52dvh;object-fit:cover;object-position:top left}
+.shot .miss{
+  display:none;padding:34px 18px;text-align:center;
+  font-family:'Azeret Mono',monospace;font-size:.68rem;line-height:1.7;color:var(--txt-3);
+}
+.shot.broken img{display:none}
+.shot.broken .miss{display:block}
+figcaption{font-family:'Azeret Mono',monospace;font-size:.63rem;color:var(--txt-3);margin-top:10px;line-height:1.6;letter-spacing:.02em}
+figcaption b{color:var(--txt-2);font-weight:500}
+.zoomhint{display:inline-flex;align-items:center;gap:5px;margin-top:9px;font-family:'Azeret Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:none;border:0;padding:0;cursor:pointer}
+
+/* plate */
+.plate{display:inline-flex;align-items:stretch;background:#fff;border:2.5px solid #111;border-radius:7px;overflow:hidden;font-family:'Azeret Mono',monospace;box-shadow:0 3px 0 oklch(30% .01 258);margin:4px 0 6px}
+.plate-b{display:flex;align-items:center;gap:3px;padding:9px 12px;font-size:clamp(1.15rem,5.4vw,1.7rem);font-weight:600;color:#141414;letter-spacing:.01em}
+.plate-b .reg{color:#a8321f}
+.plate-uz{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:3px;padding:0 9px;border-left:2px solid #111;background:#eee}
+.plate-fl{width:21px;height:14px;border-radius:2px;overflow:hidden;display:flex;flex-direction:column}
+.plate-fl i{flex:1}
+.plate-fl i:nth-child(1){background:#0099b5}
+.plate-fl i:nth-child(2){background:#fff}
+.plate-fl i:nth-child(3){background:#1eb53a}
+.plate-uz b{font-size:.56rem;letter-spacing:.1em;color:#141414}
+.seg{display:grid;grid-template-columns:52px minmax(0,1fr);gap:12px;padding:9px 0;border-bottom:1px solid var(--hair);align-items:baseline}
+.seg b{font-family:'Azeret Mono',monospace;font-size:.98rem;color:var(--amber);font-weight:600}
+.seg span{font-size:.88rem;color:var(--txt-2)}
+
+/* graph */
+.graphwrap{width:100%;border-radius:12px;border:1px solid var(--hair);background:var(--s1);overflow:hidden;position:relative}
+.graphwrap svg{width:100%;height:auto;display:block;touch-action:pan-y}
+.gnode{cursor:pointer}
+.gnode circle,.gnode rect{transition:opacity .2s var(--e)}
+.gnode:active circle,.gnode:active rect{opacity:.65}
+.glabel{font-family:'Azeret Mono',monospace;font-size:8.5px;fill:oklch(78% .01 258);letter-spacing:-.2px}
+.glabel.big{font-family:'Bricolage Grotesque',sans-serif;font-size:11px;font-weight:600;fill:oklch(96% .004 258);letter-spacing:-.2px}
+.gedge{fill:none}
+.gcap{font-family:'Azeret Mono',monospace;font-size:6.5px;fill:oklch(50% .014 258);letter-spacing:.3px}
+.glegend{display:flex;flex-wrap:wrap;gap:11px;margin-top:12px}
+.glegend span{display:flex;align-items:center;gap:5px;font-family:'Azeret Mono',monospace;font-size:.62rem;color:var(--txt-3)}
+.glegend i{width:8px;height:8px;border-radius:50%;display:block}
+.readout{margin-top:12px;padding:12px 14px;background:var(--s1);border:1px solid var(--hair);border-radius:10px;min-height:78px}
+.readout b{display:block;font-size:.94rem;margin-bottom:3px}
+.readout p{font-size:.85rem;max-width:none;color:var(--txt-2)}
+.readout.idle p{color:var(--txt-3);font-family:'Azeret Mono',monospace;font-size:.76rem}
+
+/* findings */
+.find{display:grid;grid-template-columns:30px minmax(0,1fr);gap:14px;padding:15px 0;border-bottom:1px solid var(--hair)}
+.find-n{font-family:'Azeret Mono',monospace;font-size:.68rem;font-weight:600;color:var(--rust);padding-top:4px}
+.find h3{margin-bottom:4px}
+.find p{font-size:.9rem}
+.conf{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-family:'Azeret Mono',monospace;font-size:.57rem;letter-spacing:.1em;text-transform:uppercase}
+.conf::before{content:'';width:20px;height:3px;border-radius:2px}
+.conf.h{color:var(--moss)}.conf.h::before{background:var(--moss)}
+.conf.m{color:var(--amber)}.conf.m::before{background:linear-gradient(90deg,var(--amber) 58%,var(--s3) 58%)}
+.conf.l{color:var(--txt-3)}.conf.l::before{background:linear-gradient(90deg,var(--txt-3) 26%,var(--s3) 26%)}
+
+/* gaps + tasks */
+.gap-r{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;padding:12px 0;border-bottom:1px solid var(--hair);align-items:start}
+.gap-t{font-size:.98rem;font-weight:600}
+.gap-d{font-size:.84rem;color:var(--txt-3);margin-top:2px}
+.tick{font-family:'Azeret Mono',monospace;font-size:.55rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:4px;white-space:nowrap;flex:none;margin-top:2px}
+.tick.n{background:oklch(63% .185 26/.16);color:var(--rust)}
+.tick.q{background:oklch(78% .145 72/.15);color:var(--amber)}
+.tick.y{background:oklch(72% .145 152/.15);color:var(--moss)}
+.task{display:grid;grid-template-columns:24px minmax(0,1fr);gap:13px;padding:13px 0;border-bottom:1px solid var(--hair);align-items:start;cursor:pointer;transition:opacity .2s var(--e)}
+.task input{appearance:none;width:19px;height:19px;margin-top:3px;border:1.5px solid var(--hair);border-radius:5px;cursor:pointer;flex:none;transition:all .15s var(--e)}
+.task input:checked{background:var(--moss);border-color:var(--moss)}
+.task input:checked::after{content:'✓';display:block;color:var(--void);font-size:13px;line-height:16px;text-align:center;font-weight:700}
+.task.did{opacity:.38}
+.task.did .task-t{text-decoration:line-through}
+.task-t{font-size:.98rem;font-weight:600;line-height:1.35}
+.task-d{font-size:.84rem;color:var(--txt-3);margin-top:2px}
+.task-w{font-family:'Azeret Mono',monospace;font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--amber);margin-top:5px;display:block}
+.prog{display:flex;align-items:center;gap:12px;margin-top:18px;font-family:'Azeret Mono',monospace;font-size:.64rem;color:var(--txt-3);letter-spacing:.06em}
+.prog-g{flex:1;height:4px;background:var(--s2);border-radius:3px;overflow:hidden}
+.prog-g i{display:block;height:100%;background:var(--moss);border-radius:3px;width:0;transition:width .35s var(--e)}
+
+/* chain */
+.chain-n{display:grid;grid-template-columns:64px minmax(0,1fr);gap:13px;padding:12px 0;border-bottom:1px solid var(--hair);align-items:start}
+.chain-d{font-family:'Azeret Mono',monospace;font-size:.68rem;color:var(--amber);padding-top:3px}
+.chain-p{font-size:1.02rem;font-weight:700;letter-spacing:-.018em}
+.chain-x{font-size:.85rem;color:var(--txt-3);margin-top:1px}
+
+/* cloud */
+.cloud{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}
+.tg{font-family:'Azeret Mono',monospace;font-size:.68rem;padding:4px 8px;border-radius:5px;background:var(--s1);border:1px solid var(--hair);color:var(--txt-2)}
+.tg.hot{border-color:oklch(63% .185 26/.42);color:var(--rust)}
+.tg.more{border:0;background:none;color:var(--txt-3);font-style:italic}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:90;background:oklch(8% .006 258/.96);display:none;align-items:center;justify-content:center;padding:12px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.lb.on{display:flex}
+.lb img{max-width:100%;max-height:88dvh;border-radius:8px;border:1px solid var(--hair)}
+.lb-x{position:absolute;top:calc(env(safe-area-inset-top) + 12px);right:14px;width:38px;height:38px;border-radius:50%;border:0;background:oklch(100% 0 0/.12);color:var(--txt);font-size:19px;cursor:pointer;display:grid;place-items:center}
+
+.closer{align-items:flex-start}
+.closer h2{font-size:clamp(1.75rem,7.6vw,3.2rem)}
+.closer h2 em{font-style:normal;color:var(--amber)}
+
+@media (min-width:900px){
+  .s{padding-left:max(var(--gut),8vw);padding-right:max(var(--gut),8vw)}
+  .split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:52px;align-items:center}
+  .split-head{align-self:center}
+}
+</style>
+</head>
+<body>
+
+<div class="bar" id="bar"></div>
+<header class="top">
+  <span class="top-id">KZ-001</span>
+  <span class="top-ttl" id="topTtl">Актауский кластер</span>
+  <span class="top-n m"><b id="cur">1</b>/<span id="tot">17</span></span>
+</header>
+
+<main class="deck" id="deck">
+
+<section class="s cover" data-t="Обложка">
+  <span class="eye">Дело KZ-001 · 14.08.2026</span>
+  <h1>Актауский<br>кластер<em>три субъекта, один коридор</em></h1>
+  <p class="lede">Началось с одного казахстанского номера. Закончилось прописанным в Каракалпакстане парнем, автомойкой в 22 микрорайоне и таксистом, который ходит до границы.</p>
+  <div class="cover-meta">
+    <span class="chip a">3 субъекта</span>
+    <span class="chip">38 узлов</span>
+    <span class="chip">2 ИИН проверены</span>
+    <span class="chip r">родители не найдены</span>
+  </div>
+  <span class="scroll-cue">листай ↓</span>
+</section>
+
+<section class="s" data-t="Сводка">
+  <span class="eye">01 · Сводка</span>
+  <h2>Что собрано</h2>
+  <p style="margin-bottom:22px">Всё ниже добыто из открытых источников и телефонных книг. Ни одной выдуманной цифры: где данных нет, там стоит прочерк.</p>
+  <div class="rail">
+    <div class="rail-c"><span class="rail-n a">3</span><span class="rail-l">субъекта</span></div>
+    <div class="rail-c"><span class="rail-n">3</span><span class="rail-l">номера</span></div>
+    <div class="rail-c"><span class="rail-n">10</span><span class="rail-l">email</span></div>
+    <div class="rail-c"><span class="rail-n">8</span><span class="rail-l">аккаунтов</span></div>
+    <div class="rail-c"><span class="rail-n m">2</span><span class="rail-l">ИИН валидны</span></div>
+    <div class="rail-c"><span class="rail-n">2</span><span class="rail-l">госномера</span></div>
+    <div class="rail-c"><span class="rail-n">170</span><span class="rail-l">записей в книгах</span></div>
+    <div class="rail-c"><span class="rail-n r">3</span><span class="rail-l">пробела</span></div>
+  </div>
+</section>
+
+<section class="s" data-t="Субъект 01">
+  <div class="split">
+    <div class="split-head">
+      <span class="eye">02 · Субъект 01</span>
+      <h2>Og'abek<br>Rajapboyev</h2>
+      <p>Центральная фигура. Двадцать шесть лет, узбек, прописка в Каракалпакстане, работа в Казахстане. Личность подтвердилась по четырём параметрам сразу.</p>
+    </div>
+    <div class="dl">
+      <div class="dl-r"><span class="dl-k">Рождён</span><span class="dl-v">31.08.1999</span></div>
+      <div class="dl-r"><span class="dl-k">Возраст</span><span class="dl-v">26</span></div>
+      <div class="dl-r"><span class="dl-k">Гражданство</span><span class="dl-v">Узбекистан</span></div>
+      <div class="dl-r"><span class="dl-k">Прописка</span><span class="dl-v a">г. Беруний<small>Берунийский район, Респ. Каракалпакстан</small></span></div>
+      <div class="dl-r"><span class="dl-k">Работает</span><span class="dl-v">Актау, Казахстан</span></div>
+      <div class="dl-r"><span class="dl-k">Телефон</span><span class="dl-v">+7 777 211 10 32<small>Beeline, Казахстан</small></span></div>
+      <div class="dl-r"><span class="dl-k">Email</span><span class="dl-v">naikon9696@gmail.com</span></div>
+      <div class="dl-r"><span class="dl-k">Instagram</span><span class="dl-v s">o.z.m.sev<small>активен, пост 8 дней назад</small></span></div>
+      <div class="dl-r"><span class="dl-k">Instagram</span><span class="dl-v s">rajapboyev10</span></div>
+      <div class="dl-r"><span class="dl-k">ОК</span><span class="dl-v s">564411079791</span></div>
+      <div class="dl-r"><span class="dl-k">Авто</span><span class="dl-v a">90 K 097 SA<small>Узбекистан, регион 90</small></span></div>
+      <div class="dl-r"><span class="dl-k">ПИНФЛ</span><span class="dl-v r">не получен</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="s" data-t="Скрин · данные">
+  <span class="eye">03 · Рабочий стол</span>
+  <h2>Карточка субъекта</h2>
+  <figure>
+    <button class="shot" data-lb>
+      <img src="img/desktop.png" alt="Терминал с карточкой субъекта" loading="lazy">
+      <span class="miss">img/desktop.png<br>не загружен</span>
+    </button>
+    <button class="zoomhint" data-lb>⤢ открыть целиком</button>
+    <figcaption><b>Слева:</b> выгрузка полей. Красным подсвечены три незакрытых: отец, мать, ПИНФЛ. <b>Центр:</b> профиль @o.z.m.sev. <b>Справа:</b> фото в разрешении 512, лицо не читается.</figcaption>
+  </figure>
+</section>
+
+<section class="s" data-t="Скрин · ОК">
+  <span class="eye">04 · Одноклассники</span>
+  <h2>Профиль, который<br>закрыл личность</h2>
+  <figure>
+    <button class="shot tall" data-lb>
+      <img src="img/ok.png" alt="Профиль в Одноклассниках, сетка из 42 друзей" loading="lazy">
+      <span class="miss">img/ok.png<br>не загружен</span>
+    </button>
+    <button class="zoomhint" data-lb>⤢ открыть целиком</button>
+    <figcaption>31 августа, 26 лет, Беруний, точное написание фамилии. Четыре параметра совпали одновременно. Аккаунт брошен в декабре 2017, зато список друзей открыт. <b>Обведены:</b> Отабек Ражапов и Мерена Жумалиева.</figcaption>
+  </figure>
+</section>
+
+<section class="s" data-t="Граф">
+  <span class="eye">05 · Граф связей</span>
+  <h2>Как всё сцеплено</h2>
+  <div class="graphwrap">
+    <svg viewBox="0 0 340 260" role="img" aria-label="Граф связей дела">
+      <g class="gedge" stroke-linecap="round">
+        <path d="M170 128 L170 62"   stroke="oklch(50% .014 258)" stroke-width="1"/>
+        <path d="M170 128 L82 96"    stroke="oklch(63% .185 26/.5)" stroke-width="2.2"/>
+        <path d="M170 128 L258 96"   stroke="oklch(63% .185 26/.5)" stroke-width="2.2"/>
+        <path d="M170 128 L118 186"  stroke="oklch(50% .014 258)" stroke-width="1.2" stroke-dasharray="3 3"/>
+        <path d="M170 128 L222 186"  stroke="oklch(50% .014 258)" stroke-width="1.2" stroke-dasharray="3 3"/>
+        <path d="M170 128 L170 214"  stroke="oklch(78% .145 72/.45)" stroke-width="1.6" stroke-dasharray="4 3"/>
+        <path d="M118 186 L170 214"  stroke="oklch(40% .014 258)" stroke-width=".8" stroke-dasharray="2 3"/>
+        <path d="M222 186 L170 214"  stroke="oklch(40% .014 258)" stroke-width=".8" stroke-dasharray="2 3"/>
+        <path d="M82 96 L36 150"     stroke="oklch(50% .014 258)" stroke-width="1"/>
+        <path d="M258 96 L304 150"   stroke="oklch(50% .014 258)" stroke-width="1"/>
+        <path d="M258 96 L296 52"    stroke="oklch(50% .014 258)" stroke-width="1"/>
+        <path d="M170 62 L170 26"    stroke="oklch(50% .014 258)" stroke-width="1" stroke-dasharray="3 3"/>
+      </g>
+      <g class="gnode" data-id="og" tabindex="0">
+        <circle cx="170" cy="128" r="19" fill="oklch(63% .185 26/.26)" stroke="oklch(63% .185 26)" stroke-width="1.6"/>
+        <text class="glabel big" x="170" y="126" text-anchor="middle">Og'abek</text>
+        <text class="glabel" x="170" y="137" text-anchor="middle">01</text>
+      </g>
+      <g class="gnode" data-id="mu" tabindex="0">
+        <circle cx="82" cy="96" r="15" fill="oklch(63% .185 26/.2)" stroke="oklch(63% .185 26/.8)" stroke-width="1.4"/>
+        <text class="glabel big" x="82" y="95" text-anchor="middle">Муратбек</text>
+        <text class="glabel" x="82" y="105" text-anchor="middle">02</text>
+      </g>
+      <g class="gnode" data-id="pe" tabindex="0">
+        <circle cx="258" cy="96" r="15" fill="oklch(63% .185 26/.2)" stroke="oklch(63% .185 26/.8)" stroke-width="1.4"/>
+        <text class="glabel big" x="258" y="95" text-anchor="middle">Перуза</text>
+        <text class="glabel" x="258" y="105" text-anchor="middle">03</text>
+      </g>
+      <g class="gnode" data-id="plate" tabindex="0">
+        <rect x="150" y="50" width="40" height="20" rx="4" fill="oklch(68% .13 320/.2)" stroke="oklch(68% .13 320)" stroke-width="1.2"/>
+        <text class="glabel" x="170" y="63" text-anchor="middle">90K097SA</text>
+      </g>
+      <g class="gnode" data-id="beruniy" tabindex="0">
+        <rect x="144" y="14" width="52" height="18" rx="4" fill="oklch(50% .03 258/.5)" stroke="oklch(60% .02 258)" stroke-width="1.1"/>
+        <text class="glabel" x="170" y="26" text-anchor="middle">Беруний</text>
+      </g>
+      <g class="gnode" data-id="radj" tabindex="0">
+        <circle cx="118" cy="186" r="14" fill="oklch(78% .145 72/.16)" stroke="oklch(78% .145 72/.75)" stroke-width="1.3"/>
+        <text class="glabel" x="118" y="184" text-anchor="middle">Раджаповы</text>
+        <text class="glabel" x="118" y="193" text-anchor="middle">×4</text>
+      </g>
+      <g class="gnode" data-id="merena" tabindex="0">
+        <circle cx="222" cy="186" r="14" fill="oklch(78% .145 72/.16)" stroke="oklch(78% .145 72/.75)" stroke-width="1.3"/>
+        <text class="glabel" x="222" y="184" text-anchor="middle">Мерена</text>
+        <text class="glabel" x="222" y="193" text-anchor="middle">Ж.</text>
+      </g>
+      <g class="gnode" data-id="parents" tabindex="0">
+        <circle cx="170" cy="214" r="17" fill="oklch(78% .145 72/.1)" stroke="oklch(78% .145 72)" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text class="glabel big" x="170" y="212" text-anchor="middle" fill="oklch(78% .145 72)">Родители</text>
+        <text class="glabel" x="170" y="222" text-anchor="middle" fill="oklch(78% .145 72)">?</text>
+      </g>
+      <g class="gnode" data-id="taxi" tabindex="0">
+        <rect x="14" y="141" width="44" height="18" rx="4" fill="oklch(72% .12 235/.16)" stroke="oklch(72% .12 235/.8)" stroke-width="1.1"/>
+        <text class="glabel" x="36" y="153" text-anchor="middle">Такси</text>
+      </g>
+      <g class="gnode" data-id="lux" tabindex="0">
+        <rect x="278" y="141" width="52" height="18" rx="4" fill="oklch(72% .12 235/.16)" stroke="oklch(72% .12 235/.8)" stroke-width="1.1"/>
+        <text class="glabel" x="304" y="153" text-anchor="middle">LUX WASH</text>
+      </g>
+      <g class="gnode" data-id="ib" tabindex="0">
+        <circle cx="296" cy="52" r="13" fill="oklch(63% .185 26/.14)" stroke="oklch(63% .185 26/.6)" stroke-width="1.2" stroke-dasharray="4 3"/>
+        <text class="glabel" x="296" y="55" text-anchor="middle">Ыбырай</text>
+      </g>
+      <text class="gcap" x="126" y="108">контакт</text>
+      <text class="gcap" x="196" y="108">контакт</text>
+      <text class="gcap" x="176" y="98" transform="rotate(-90 176 98)">авто</text>
+      <text class="gcap" x="174" y="176">цель</text>
+    </svg>
+  </div>
+  <div class="glegend">
+    <span><i style="background:oklch(63% .185 26)"></i>персона</span>
+    <span><i style="background:oklch(78% .145 72)"></i>зацепка</span>
+    <span><i style="background:oklch(68% .13 320)"></i>документ</span>
+    <span><i style="background:oklch(72% .12 235)"></i>бизнес</span>
+    <span><i style="background:oklch(60% .02 258)"></i>место</span>
+  </div>
+  <div class="readout idle" id="ro"><p>Тапни любой узел, чтобы раскрыть.</p></div>
+</section>
+
+<section class="s" data-t="Госномер">
+  <span class="eye rust">06 · Перелом</span>
+  <h2>Номер оказался<br>не казахстанским</h2>
+  <div class="plate">
+    <span class="plate-b"><span class="reg">90</span><span>K</span><span>097</span><span>SA</span></span>
+    <span class="plate-uz"><span class="plate-fl"><i></i><i></i><i></i></span><b>UZ</b></span>
+  </div>
+  <p style="margin-bottom:14px">У Муратбека номер <code>A489BE17</code>: три цифры, три буквы, регион в конце. Тут структура обратная, и это узбекский стандарт образца 2008 года. Код региона стоит впереди.</p>
+  <div>
+    <div class="seg"><b>90</b><span>Хорезмская область, центр Ургенч. Диапазон 90–94 закреплён постановлением Кабмина РУз.</span></div>
+    <div class="seg"><b>K</b><span>Буква партии выдачи, географии не несёт.</span></div>
+    <div class="seg"><b>097</b><span>Порядковый номер внутри серии.</span></div>
+    <div class="seg"><b>SA</b><span>Вторая буквенная пара, тоже партия.</span></div>
+  </div>
+  <p style="margin-top:16px"><b>«Феруза Жумасшы» это не фамилия.</b> <code>Жұмысшы</code> по-казахски значит «работник». В книгах субъекта 03 уже стоит тег «Автомоика Жумысшы Феруза». Тебе отдали метку из чужих контактов, а не владельца по документам.</p>
+</section>
+
+<section class="s" data-t="Маршрут">
+  <span class="eye">07 · География</span>
+  <h2>Один коридор<br>на всё дело</h2>
+  <figure>
+    <button class="shot" data-lb>
+      <img src="img/map.png" alt="Карта маршрута Беруний, Ургенч, Бейнеу, Актау" loading="lazy">
+      <span class="miss">img/map.png<br>не загружен</span>
+    </button>
+    <button class="zoomhint" data-lb>⤢ открыть целиком</button>
+    <figcaption>Беруний стоит на правом берегу Амударьи, в 20 км от станции Ургенч, и граничит с Хорезмской областью. Поэтому хорезмский код 90 на машине парня с каракалпакской прописки противоречия не создаёт.</figcaption>
+  </figure>
+</section>
+
+<section class="s" data-t="Цепочка">
+  <span class="eye">08 · Цепочка</span>
+  <h2>Четыре точки,<br>одна дорога</h2>
+  <div style="margin-top:8px">
+    <div class="chain-n"><span class="chain-d">0 км</span><span><span class="chain-p">Беруний</span><span class="chain-x">Прописка субъекта 01. Каракалпакстан, автокод 95, 11 сельских советов, около 200 тысяч в районе.</span></span></div>
+    <div class="chain-n"><span class="chain-d">20 км</span><span><span class="chain-p">Ургенч</span><span class="chain-x">Ближайший вокзал и центр Хорезма. Автокод 90, ровно как на номере.</span></span></div>
+    <div class="chain-n"><span class="chain-d">~450 км</span><span><span class="chain-p">Бейнеу</span><span class="chain-x">Первый узел за границей. Тег «Муратбек Бейнеу» и «брат88Бейнеу» у субъекта 02.</span></span></div>
+    <div class="chain-n"><span class="chain-d">~600 км</span><span><span class="chain-p">Актау</span><span class="chain-x">Конечная. Автомойка в 22 микрорайоне, такси Муратбека, работа субъекта 01.</span></span></div>
+  </div>
+  <p style="margin-top:18px">Все трое нанизаны на этот маршрут по порядку. Отсюда и казахстанская симка при узбекской машине.</p>
+</section>
+
+<section class="s" data-t="Субъект 02">
+  <div class="split">
+    <div class="split-head">
+      <span class="eye">09 · Субъект 02</span>
+      <h2>Тажигулов<br>Муратбек</h2>
+      <p>Таксист. Возит по Актау, Бейнеу и Макату. Из 98 записей в чужих телефонах почти все про такси, документы и конкретные машины.</p>
+      <div class="cloud">
+        <span class="tg hot">Мурат Такси</span>
+        <span class="tg hot">Муратбек Ага Таксий Актау</span>
+        <span class="tg hot">Естима Актау Такси</span>
+        <span class="tg">Муратбек Бейнеу</span>
+        <span class="tg">Актау Документы</span>
+        <span class="tg">Ваз09 Док</span>
+        <span class="tg">Естима Армения</span>
+        <span class="tg more">и ещё 48</span>
+      </div>
+    </div>
+    <div class="dl">
+      <div class="dl-r"><span class="dl-k">ФИО</span><span class="dl-v">ТАЖИГУЛОВ МУРАТБЕК ДАНЫШБЕКОВИЧ</span></div>
+      <div class="dl-r"><span class="dl-k">Рождён</span><span class="dl-v">11.09.1988 · 37 лет</span></div>
+      <div class="dl-r"><span class="dl-k">ИИН</span><span class="dl-v m">880911301994<small>контрольная сумма сходится</small></span></div>
+      <div class="dl-r"><span class="dl-k">Телефон</span><span class="dl-v">+7 776 981 11 81<small>Beeline, Казахстан</small></span></div>
+      <div class="dl-r"><span class="dl-k">Email</span><span class="dl-v">muratbek.t.d@gmail.com<br>muratbek@mail.ru<br>mtazhigulov@inbox.ru</span></div>
+      <div class="dl-r"><span class="dl-k">ВКонтакте</span><span class="dl-v s">id241774321</span></div>
+      <div class="dl-r"><span class="dl-k">Telegram</span><span class="dl-v s">@zMEklxcbl · 738303089</span></div>
+      <div class="dl-r"><span class="dl-k">Авто</span><span class="dl-v a">A489BE17<small>регион 17, Мангистау</small></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="s" data-t="Субъект 03">
+  <div class="split">
+    <div class="split-head">
+      <span class="eye">10 · Субъект 03</span>
+      <h2>Бердибаева<br>Перуза</h2>
+      <p>Держит автомойку LUX WASH в 22 микрорайоне. Пишет себя и Ферузой, и Перузой: собственные email идут в двух написаниях. Скорее работодатель субъекта 01, чем родня.</p>
+      <div class="cloud">
+        <span class="tg hot">LUX WASH</span>
+        <span class="tg hot">Люкс Мойкы Феруза Апа</span>
+        <span class="tg hot">Мойка ыбырайдын катыны</span>
+        <span class="tg">Автомойка22мкр</span>
+        <span class="tg">Арман Мамасы</span>
+        <span class="tg">Автомойщики</span>
+        <span class="tg more">и ещё 22</span>
+      </div>
+    </div>
+    <div class="dl">
+      <div class="dl-r"><span class="dl-k">ФИО</span><span class="dl-v">БЕРДИБАЕВА ПЕРУЗА АБАТОВНА</span></div>
+      <div class="dl-r"><span class="dl-k">Рождён</span><span class="dl-v">31.08.1984 · 41 год</span></div>
+      <div class="dl-r"><span class="dl-k">ИИН</span><span class="dl-v m">840831000093<small>сумма сходится, но 7-я цифра странная</small></span></div>
+      <div class="dl-r"><span class="dl-k">Телефон</span><span class="dl-v">+7 708 369 48 03<small>Altel, Казахстан</small></span></div>
+      <div class="dl-r"><span class="dl-k">Email</span><span class="dl-v">feruza310884kz@gmail.com<br>feruza310884@gmail.com<br>peruza310819984@gmail.com</span></div>
+      <div class="dl-r"><span class="dl-k">ВКонтакте</span><span class="dl-v s">id595177273<small>оформлен на сына Армана</small></span></div>
+      <div class="dl-r"><span class="dl-k">TikTok</span><span class="dl-v s">user7648639876540</span></div>
+      <div class="dl-r"><span class="dl-k">Бизнес</span><span class="dl-v a">LUX WASH, 22 мкр, Актау</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="s" data-t="Ыбырай">
+  <span class="eye">11 · Скрытая фигура</span>
+  <h2>Ыбырай, которого<br>выдал один тег</h2>
+  <p style="margin-bottom:16px">Тег <code>Мойка ыбырайдын катыны</code> переводится буквально: «жена Ыбырая». На том же номере висят три адреса с датой внутри ника. Так в деле появился человек, которого никто не искал.</p>
+  <div class="dl">
+    <div class="dl-r"><span class="dl-k">Имя</span><span class="dl-v">Ыбырай</span></div>
+    <div class="dl-r"><span class="dl-k">Рождён</span><span class="dl-v a">03.07.1979<small>выведено из ника, не из реестра</small></span></div>
+    <div class="dl-r"><span class="dl-k">Email</span><span class="dl-v">ibray03071979@gmail.com<br>ibrai03071979@gmail.com<br>ibrai030779@gmail.com</span></div>
+    <div class="dl-r"><span class="dl-k">Связь</span><span class="dl-v">муж субъекта 03</span></div>
+    <div class="dl-r"><span class="dl-k">Сын</span><span class="dl-v">Арман Жолдасбаев, 13.05.2007</span></div>
+    <div class="dl-r"><span class="dl-k">Статус</span><span class="dl-v r">не пробит</span></div>
+  </div>
+  <p style="margin-top:16px">Фамилия сына Жолдасбаев расходится с реестровой Бердибаева. Значит Жолдасбаев это фамилия мужа, и в книгах всплывают Молдир с Назерке из той же семьи.</p>
+</section>
+
+<section class="s" data-t="ИИН">
+  <span class="eye moss">12 · Верификация</span>
+  <h2>Данные настоящие,<br>проверил арифметикой</h2>
+  <p style="margin-bottom:18px">Казахстанский ИИН это не случайные двенадцать цифр. Первые шесть кодируют дату рождения в формате ГГММДД, седьмая век и пол, последняя считается по официальному алгоритму: первые одиннадцать умножаются на веса 1–11, сумма берётся по модулю 11.</p>
+  <div class="dl">
+    <div class="dl-r"><span class="dl-k">880911301994</span><span class="dl-v m">остаток 4 = 12-я цифра ✓<small>Муратбек, 11.09.1988. Совпало.</small></span></div>
+    <div class="dl-r"><span class="dl-k">840831000093</span><span class="dl-v m">остаток 3 = 12-я цифра ✓<small>Перуза, 31.08.1984. Совпало.</small></span></div>
+    <div class="dl-r"><span class="dl-k">9908313????</span><span class="dl-v a">выведено для субъекта 01<small>990831 = дата, 3 = муж 1900-х. Перебирать четыре цифры, не двенадцать.</small></span></div>
+  </div>
+  <p style="margin-top:18px">Одна странность: у Перузы седьмая цифра <code>0</code>, хотя для женщины 1900-х там ждём <code>4</code>. Сумма при этом верна. Либо старая партия регистрации, либо в базе подменили символ. Стоит перепроверить отдельно.</p>
+  <p><b>Важно про субъекта 01:</b> он гражданин Узбекистана, а там вместо ИИН работает ПИНФЛ на 14 цифр. Этот калькулятор к нему не применим.</p>
+</section>
+
+<section class="s" data-t="Выводы">
+  <span class="eye">13 · Выводы</span>
+  <h2>Что из этого следует</h2>
+  <div style="margin-top:6px">
+    <div class="find">
+      <span class="find-n">01</span>
+      <div>
+        <h3>Дело живёт в Узбекистане, не в Казахстане</h3>
+        <p>Госномер узбекский, прописка каракалпакская, фамилия хорезмская. Ни один казахстанский инструмент родителей тут не найдёт.</p>
+        <span class="conf h">Высокая</span>
+      </div>
+    </div>
+    <div class="find">
+      <span class="find-n">02</span>
+      <div>
+        <h3>Имя отца спрятано внутри имени сына</h3>
+        <p>Узбекское отчество строится как имя отца плюс <code>o'g'li</code>. Любой документ субъекта 01 с полным именем выдаёт отца бесплатно: паспорт, права, диплом, трудовой патент.</p>
+        <span class="conf h">Высокая</span>
+      </div>
+    </div>
+    <div class="find">
+      <span class="find-n">03</span>
+      <div>
+        <h3>Он работник мойки, а не родственник</h3>
+        <p>Двадцать шесть лет, ноль имущества, оба контакта из автобизнеса, а у Перузы в тегах «Автомойщики» во множественном числе. Версия с родством ничего не объясняет, версия с работой объясняет всё.</p>
+        <span class="conf m">Средняя</span>
+      </div>
+    </div>
+    <div class="find">
+      <span class="find-n">04</span>
+      <div>
+        <h3>Четверо Раджаповых это братья или двоюродные</h3>
+        <p>Rajapboyev и Radjapov растут из корня Rajap и расходятся в паспортах членов одной семьи. Четыре таких человека среди 42 друзей на случайность не тянут.</p>
+        <span class="conf m">Средняя</span>
+      </div>
+    </div>
+    <div class="find">
+      <span class="find-n">05</span>
+      <div>
+        <h3>Совпадение дат 31 августа</h3>
+        <p>Он родился 31.08.1999, Перуза 31.08.1984. Красиво, но это шум: один день из 365. Версию родства на этом не строй.</p>
+        <span class="conf l">Слабая</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s" data-t="Пробелы">
+  <span class="eye rust">14 · Пробелы</span>
+  <h2>Чего в деле нет</h2>
+  <div style="margin-top:4px">
+    <div class="gap-r"><span><span class="gap-t">Имя отца</span><span class="gap-d">Ни один источник не содержит отчества</span></span><span class="tick n">закрыто</span></div>
+    <div class="gap-r"><span><span class="gap-t">Имя матери</span><span class="gap-d">Лучшая зацепка это Мерена Жумалиева</span></span><span class="tick n">закрыто</span></div>
+    <div class="gap-r"><span><span class="gap-t">ПИНФЛ</span><span class="gap-d">Узбекские реестры без OneID не открываются</span></span><span class="tick n">закрыто</span></div>
+    <div class="gap-r"><span><span class="gap-t">Владелец 90K097SA</span><span class="gap-d">Нужен узбекский сервис, не казахстанский</span></span><span class="tick n">закрыто</span></div>
+    <div class="gap-r"><span><span class="gap-t">Фото и лицо</span><span class="gap-d">Аватарки существуют, забрать вручную</span></span><span class="tick q">частично</span></div>
+    <div class="gap-r"><span><span class="gap-t">Точный адрес</span><span class="gap-d">Город есть, махалля и улица нет</span></span><span class="tick n">закрыто</span></div>
+  </div>
+</section>
+
+<section class="s" data-t="План">
+  <span class="eye moss">15 · План</span>
+  <h2>Что делать дальше</h2>
+  <p style="margin-bottom:6px">Первые три пункта закрывают почти всё. Галочки сохраняются на этом устройстве.</p>
+  <div id="tasks" style="margin-top:12px">
+    <label class="task"><input type="checkbox" data-t="p1">
+      <span><span class="task-t">Снять всё с @o.z.m.sev</span><span class="task-d">Bio, ссылки, отмеченные фото, подписки. В подписках узбекского аккаунта родня стоит почти всегда: ищи Rajapboyev, Rajapboyeva, Radjapov и возраст от 45.</span><span class="task-w">15 минут</span></span></label>
+    <label class="task"><input type="checkbox" data-t="p2">
+      <span><span class="task-t">Аватарку в Yandex Images</span><span class="task-d">Теперь есть откуда брать фото. Яндекс по лицам в СНГ работает несопоставимо лучше Google.</span><span class="task-w">10 минут</span></span></label>
+    <label class="task"><input type="checkbox" data-t="p3">
+      <span><span class="task-t">Открыть Мерену Жумалиеву</span><span class="task-d">Единственная женщина среди 42 друзей. Если ей 45 плюс и она из Беруния, мать найдена.</span><span class="task-w">10 минут</span></span></label>
+    <label class="task"><input type="checkbox" data-t="p4">
+      <span><span class="task-t">Пройти по четверым Раджаповым</span><span class="task-d">Заходи в их списки друзей, а не в его. У братьев родители в друзьях висят почти наверняка.</span><span class="task-w">30 минут</span></span></label>
+    <label class="task"><input type="checkbox" data-t="p5">
+      <span><span class="task-t">Epieos по naikon9696@gmail.com</span><span class="task-d">В Google-аккаунте имя чаще всего настоящее и иногда с отчеством. Самый быстрый шанс закрыть отца без узбекских реестров.</span><span class="task-w">5 минут</span></span></label>
+    <label class="task"><input type="checkbox" data-t="p6">
+      <span><span class="task-t">90K097SA через узбекские боты</span><span class="task-d">my.gov.uz требует OneID с местным паспортом. Семейная машина в этом регионе почти всегда стоит на отце.</span><span class="task-w">зависит от бота</span></span></label>
+    <label class="task"><input type="checkbox" data-t="p7">
+      <span><span class="task-t">Раскрыть Ыбырая</span><span class="task-d">Три адреса ibrai03071979 и дата в нике. Ближайшая к центру дела непробитая личность.</span><span class="task-w">20 минут</span></span></label>
+    <label class="task"><input type="checkbox" data-t="p8">
+      <span><span class="task-t">Локальные чаты Беруния</span><span class="task-d">Канал BERUNIY_PRESS, группа «I ♥ BERUNIY», районные чаты по 11 сельсоветам. Там фамилии и адреса пишут открытым текстом.</span><span class="task-w">час</span></span></label>
+  </div>
+  <div class="prog"><span id="pc">0 / 8</span><span class="prog-g"><i id="pb"></i></span><span>закрыто</span></div>
+</section>
+
+<section class="s closer" data-t="Итог">
+  <span class="eye">Итог</span>
+  <h2>Личность закрыта.<br><em>Родители нет.</em></h2>
+  <p class="lede" style="margin-top:18px">Три шага отделяют дело от финала: фото в обратный поиск, Мерена в Одноклассниках и госномер через узбекский сервис. Всё остальное уже лежит на столе.</p>
+  <div class="cover-meta" style="margin-top:26px">
+    <span class="chip">Дело KZ-001</span>
+    <span class="chip">версия 3</span>
+    <span class="chip r">серая зона</span>
+  </div>
+</section>
+
+</main>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true">
+  <button class="lb-x" id="lbX" aria-label="Закрыть">✕</button>
+  <img id="lbImg" src="" alt="">
+</div>
+
+<script>
+(function(){
+'use strict';
+
+var deck = document.getElementById('deck');
+var slides = Array.prototype.slice.call(deck.querySelectorAll('.s'));
+var bar = document.getElementById('bar');
+var cur = document.getElementById('cur');
+var tot = document.getElementById('tot');
+var topTtl = document.getElementById('topTtl');
+
+tot.textContent = slides.length;
+
+/* progress */
+var raf = null;
+function onScroll(){
+  if(raf) return;
+  raf = requestAnimationFrame(function(){
+    raf = null;
+    var max = deck.scrollHeight - deck.clientHeight;
+    bar.style.width = (max > 0 ? (deck.scrollTop / max) * 100 : 0) + '%';
+  });
+}
+deck.addEventListener('scroll', onScroll, { passive:true });
+onScroll();
+
+var io = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting && e.intersectionRatio > 0.5){
+      var i = slides.indexOf(e.target);
+      if(i >= 0){
+        cur.textContent = i + 1;
+        topTtl.textContent = e.target.dataset.t || '';
+      }
+    }
+  });
+}, { root:deck, threshold:[0.5] });
+slides.forEach(function(s){ io.observe(s); });
+
+/* missing image placeholders */
+Array.prototype.forEach.call(document.querySelectorAll('.shot img'), function(im){
+  im.addEventListener('error', function(){
+    var host = im.closest('.shot');
+    if(host) host.classList.add('broken');
+  });
+  if(im.complete && im.naturalWidth === 0){
+    var host = im.closest('.shot');
+    if(host) host.classList.add('broken');
+  }
+});
+
+/* graph readout */
+var GD = {
+  og: ["Og'abek Rajapboyev · субъект 01", "31.08.1999, Беруний, Каракалпакстан. Работает в Актау. Два живых Instagram, ОК брошен с 2017. ПИНФЛ и родители не установлены."],
+  mu: ["Тажигулов Муратбек · субъект 02", "37 лет, ИИН 880911301994 проверен. Таксует по Актау, Бейнеу и Макату. 98 записей в чужих телефонных книгах."],
+  pe: ["Бердибаева Перуза · субъект 03", "41 год, ИИН 840831000093 проверен. Владеет автомойкой LUX WASH в 22 микрорайоне. 72 записи, почти все про мойку."],
+  plate: ["90 K 097 SA", "Узбекский госномер образца 2008 года. Код 90 это Хорезмская область, центр Ургенч. Владелец не установлен: вероятно отец."],
+  beruniy: ["Беруний", "Город и район в Каракалпакстане, правый берег Амударьи. 20 км до вокзала Ургенча, граница с Хорезмом на юге. Старое название района Шаббоз."],
+  radj: ["Раджаповы, четверо", "Отабек Ражапов, Раджапов Мухаммад, Abbos Radjapov, Radjapov Uz. Все из списка друзей в ОК. Один корень Rajap: вероятные братья или двоюродные."],
+  merena: ["Мерена Жумалиева", "Единственная женщина среди 42 друзей в ОК. В таком профиле это почти всегда мать, сестра или жена. Самая прямая нить к матери."],
+  parents: ["Родители, не установлены", "Отец раскрывается через отчество или владельца машины. Мать вероятно носит фамилию Rajapboyeva, искать по Берунийскому району."],
+  taxi: ["Такси Актау", "Направления Актау, Бейнеу, Макат. Теги «Естима Армения» и «Ваз09 Док» указывают на конкретные машины и оформление документов."],
+  lux: ["LUX WASH", "Автомойка в 22 микрорайоне Актау. Больше 40 вариантов записи в чужих книгах. Скорее всего место работы субъекта 01."],
+  ib: ["Ыбырай", "Муж субъекта 03, дата 03.07.1979 выведена из ника. Три адреса ibrai03071979 висят на её номере. Не пробит."]
+};
+
+var ro = document.getElementById('ro');
+Array.prototype.forEach.call(document.querySelectorAll('.gnode'), function(g){
+  function open(){
+    var d = GD[g.dataset.id];
+    if(!d) return;
+    ro.className = 'readout';
+    ro.innerHTML = '<b>' + d[0] + '</b><p>' + d[1] + '</p>';
+  }
+  g.addEventListener('click', open);
+  g.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); open(); } });
+});
+
+/* lightbox */
+var lb = document.getElementById('lb');
+var lbImg = document.getElementById('lbImg');
+function closeLb(){
+  lb.classList.remove('on');
+  document.body.style.overflow = '';
+  lbImg.src = '';
+}
+Array.prototype.forEach.call(document.querySelectorAll('[data-lb]'), function(b){
+  b.addEventListener('click', function(){
+    var fig = b.closest('figure');
+    var im = fig ? fig.querySelector('img') : null;
+    if(!im || im.naturalWidth === 0) return;
+    lbImg.src = im.currentSrc || im.src;
+    lb.classList.add('on');
+    document.body.style.overflow = 'hidden';
+  });
+});
+document.getElementById('lbX').addEventListener('click', closeLb);
+lb.addEventListener('click', function(e){ if(e.target === lb) closeLb(); });
+
+/* checklist */
+var KEY = 'kz001-plan';
+var saved = {};
+try{ saved = JSON.parse(localStorage.getItem(KEY) || '{}'); }catch(e){ saved = {}; }
+
+var boxes = Array.prototype.slice.call(document.querySelectorAll('#tasks input'));
+var pc = document.getElementById('pc');
+var pb = document.getElementById('pb');
+
+function paint(){
+  var n = 0;
+  boxes.forEach(function(b){
+    b.closest('.task').classList.toggle('did', b.checked);
+    if(b.checked) n++;
+  });
+  pc.textContent = n + ' / ' + boxes.length;
+  pb.style.width = (n / boxes.length * 100) + '%';
+}
+boxes.forEach(function(b){
+  if(saved[b.dataset.t]) b.checked = true;
+  b.addEventListener('change', function(){
+    saved[b.dataset.t] = b.checked;
+    try{ localStorage.setItem(KEY, JSON.stringify(saved)); }catch(e){}
+    paint();
+  });
+});
+paint();
+
+/* keyboard */
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape'){ closeLb(); return; }
+  if(lb.classList.contains('on')) return;
+  var tag = document.activeElement ? document.activeElement.tagName : '';
+  if(/INPUT|TEXTAREA/.test(tag)) return;
+  var i = parseInt(cur.textContent, 10) - 1;
+  if(e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' '){
+    e.preventDefault();
+    if(slides[i+1]) slides[i+1].scrollIntoView({ behavior:'smooth' });
+  }
+  if(e.key === 'ArrowUp' || e.key === 'PageUp'){
+    e.preventDefault();
+    if(slides[i-1]) slides[i-1].scrollIntoView({ behavior:'smooth' });
+  }
+});
+
+})();
+</script>
+</body>
+</html>
